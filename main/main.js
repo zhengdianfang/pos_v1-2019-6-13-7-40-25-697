@@ -52,3 +52,29 @@ function makeReceiptItems(codes) {
     } 
     return receiptItems;
 }
+
+function assembleReceiptString(receiptItems) {
+    let outputString = "***<没钱赚商店>收据***\n"; 
+    let sumPrice = 0;
+    for (let index = 0; index < receiptItems.length; index++) {
+      let { product, count } = receiptItems[index];
+      const promotionType = findPromotion(product.barcode);
+      let totalPrice = product.price * count.toFixed(2); 
+      if (promotionType === 'BUY_TWO_GET_ONE_FREE' && count >=2) {
+          totalPrice = product.price * (count - 1); 
+      }
+      sumPrice += totalPrice; 
+      outputString += `名称：${product.name}，数量：${count}${product.unit}，单价：${product.price.toFixed(2)}(元)，小计：${totalPrice.toFixed(2)}(元)\n`
+  
+    }
+    outputString += "----------------------\n";
+    outputString += `总计：${sumPrice.toFixed(2)}(元)\n` 
+    outputString += `**********************` 
+    return outputString;
+  }
+  
+  function printReceipt(inputs) {
+      const receiptItems = makeReceiptItems(inputs);  
+      const outputString = assembleReceiptString(receiptItems);
+      console.log(outputString);
+}
