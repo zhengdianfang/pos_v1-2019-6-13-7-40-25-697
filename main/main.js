@@ -11,3 +11,14 @@ function findProduct(code) {
     }
     return undefined;
 }
+
+function indexOf(receiptItems, product) {
+    let index = -1;
+    for (let i = 0; i < receiptItems.length; i++) {
+      const receiptItem = receiptItems[i];
+      if (receiptItem.product.barcode === product.barcode) {
+        index = i;
+      }
+    }
+    return index;
+}

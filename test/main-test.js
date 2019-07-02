@@ -2,7 +2,7 @@
 
 describe('pos', () => {
 
-  it('should return product when input barcode', () => {
+  it('should product when input barcode', () => {
     const code = 'ITEM000001';
     const product = findProduct(code);
     expect(product).toEqual({
@@ -11,6 +11,69 @@ describe('pos', () => {
       unit: '瓶',
       price: 3.00
     });
+  })
+
+  it('should undefined when input not exist barcode', () => {
+    const code = 'ITEM0001111';
+    const product = findProduct(code);
+    expect(product).toEqual(undefined);
+  })
+
+  it('should exist when receiptItems contain ipnut product', () => {
+      const product = {
+        barcode: 'ITEM000001',
+        name: '雪碧',
+        unit: '瓶',
+        price: 3.00
+      };
+
+      const mockReceiptItems = [
+      {
+        count: 1,
+        product: {
+          barcode: 'ITEM000001',
+          name: '雪碧',
+          unit: '瓶',
+          price: 3.00
+        }
+      }, 
+      {
+        count: 2,
+        product: {
+          barcode: 'ITEM000002',
+          name: '苹果',
+          unit: '斤',
+          price: 5.50
+        }
+      }, 
+      ];
+
+    const index = indexOf(mockReceiptItems, product);
+    expect(index).toBe(0);
+  })
+
+  it('should not exist when receiptItems not contain ipnut product', () => {
+      const product = {
+        barcode: 'ITEM000001',
+        name: '雪碧',
+        unit: '瓶',
+        price: 3.00
+      };
+
+      const mockReceiptItems = [
+      {
+        count: 2,
+        product: {
+          barcode: 'ITEM000002',
+          name: '苹果',
+          unit: '斤',
+          price: 5.50
+        }
+      }, 
+      ];
+
+    const index = indexOf(mockReceiptItems, product);
+    expect(index).toBe(-1);
   })
 
   it('should print text', () => {
