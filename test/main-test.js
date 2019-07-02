@@ -76,6 +76,36 @@ describe('pos', () => {
     expect(index).toBe(-1);
   })
 
+  it('should receiptItems when input array of barcode', () => {
+    const barcodes = [
+      'ITEM000001',
+      'ITEM000001',
+      'ITEM000005',
+    ]; 
+    const receiptItems = makeReceiptItems(barcodes);
+
+    expect(receiptItems).toEqual([
+      {
+        count: 2,
+        product: {
+          barcode: 'ITEM000001',
+          name: '雪碧',
+          unit: '瓶',
+          price: 3.00
+        },
+      },
+      {
+        count: 1,
+        product: {
+          barcode: 'ITEM000005',
+          name: '方便面',
+          unit: '袋',
+          price: 4.50
+        },
+      },
+    ]); 
+  })
+
   it('should print text', () => {
 
     const tags = [

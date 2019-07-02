@@ -22,3 +22,19 @@ function indexOf(receiptItems, product) {
     }
     return index;
 }
+
+function makeReceiptItems(codes) {
+    const receiptItems = [];
+    for (let i = 0; i < codes.length; i++) {
+      const product = findProduct(codes[i]);
+      if (product) {
+        const findIndex = indexOf(receiptItems, product);
+        if (findIndex >= 0) {
+          receiptItems[findIndex].count += 1;
+        } else {
+          receiptItems.push({ product, count: 1});
+        }
+      }
+    } 
+    return receiptItems;
+  }
