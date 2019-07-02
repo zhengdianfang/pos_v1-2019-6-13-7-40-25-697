@@ -76,6 +76,18 @@ describe('pos', () => {
     expect(index).toBe(-1);
   })
 
+  it('should promotion type when input barcode', () => {
+     const barcode = 'ITEM000000';
+     const type = findPromotion(barcode);
+     expect(type).toBe('BUY_TWO_GET_ONE_FREE');
+  })
+
+  it('should undefined when input barcode not in promotion', () => {
+     const barcode = 'ITEM0002123123';
+     const type = findPromotion(barcode);
+     expect(type).toBe(undefined);
+  })
+
   it('should receiptItems when input array of barcode', () => {
     const barcodes = [
       'ITEM000001',

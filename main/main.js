@@ -23,6 +23,20 @@ function indexOf(receiptItems, product) {
     return index;
 }
 
+function findPromotion(code) {
+    const allPromotions = loadPromotions();
+    for (let index = 0; index < allPromotions.length; index++) {
+        const promotion = allPromotions[index];
+        for (let i = 0; i < promotion.barcodes.length; i++) {
+            const barcode = promotion.barcodes[i];
+            if(barcode === code) {
+               return promotion.type; 
+            }
+        }
+    }
+    return undefined;
+}
+
 function makeReceiptItems(codes) {
     const receiptItems = [];
     for (let i = 0; i < codes.length; i++) {
@@ -37,4 +51,4 @@ function makeReceiptItems(codes) {
       }
     } 
     return receiptItems;
-  }
+}
