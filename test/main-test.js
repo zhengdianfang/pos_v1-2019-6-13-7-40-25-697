@@ -2,6 +2,17 @@
 
 describe('pos', () => {
 
+  it('should return product when input barcode', () => {
+    const code = 'ITEM000001';
+    const product = findProduct(code);
+    expect(product).toEqual({
+      barcode: 'ITEM000001',
+      name: '雪碧',
+      unit: '瓶',
+      price: 3.00
+    });
+  })
+
   it('should print text', () => {
 
     const tags = [
