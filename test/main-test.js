@@ -20,11 +20,14 @@ describe('pos', () => {
   })
 
   it('should exist when receiptItems contain ipnut product', () => {
-      const product = {
-        barcode: 'ITEM000001',
-        name: '雪碧',
-        unit: '瓶',
-        price: 3.00
+      const item = {
+        product: {
+          barcode: 'ITEM000001',
+          name: '雪碧',
+          unit: '瓶',
+          price: 3.00
+        },
+        count: 1,
       };
 
       const mockReceiptItems = [
@@ -48,16 +51,19 @@ describe('pos', () => {
       }, 
       ];
 
-    const index = indexOf(mockReceiptItems, product);
+    const index = indexOf(mockReceiptItems, item);
     expect(index).toBe(0);
   })
 
   it('should not exist when receiptItems not contain ipnut product', () => {
       const product = {
-        barcode: 'ITEM000001',
-        name: '雪碧',
-        unit: '瓶',
-        price: 3.00
+        product: {
+          barcode: 'ITEM000001',
+          name: '雪碧',
+          unit: '瓶',
+          price: 3.00
+        },
+        count: 1,
       };
 
       const mockReceiptItems = [
@@ -93,10 +99,14 @@ describe('pos', () => {
       'ITEM000001',
       'ITEM000001',
       'ITEM000005',
+      'ITEM000003-2.5',
     ]; 
-    const receiptItems = makeReceiptItems(barcodes);
+    const receipt = makeReceipt(barcodes);
 
-    expect(receiptItems).toEqual([
+    expect(receipt).toEqual({
+      savePrice: 3,
+      finalPriceSum: 45,
+      receiptItems: [
       {
         count: 2,
         product: {
@@ -105,6 +115,7 @@ describe('pos', () => {
           unit: '瓶',
           price: 3.00
         },
+        totalPrice: 3.00
       },
       {
         count: 1,
@@ -114,8 +125,20 @@ describe('pos', () => {
           unit: '袋',
           price: 4.50
         },
+        totalPrice: 4.50
       },
-    ]); 
+      {
+        count: 2.5,
+        product: {
+          barcode: 'ITEM000003',
+          name: '荔枝',
+          unit: '斤',
+          price: 15.00
+        },
+        totalPrice: 37.50,
+      }
+    ]
+    }); 
   })
 
   it('should print text', () => {
